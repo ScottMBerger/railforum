@@ -7,4 +7,6 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
+  validates :username, presence: true, length: { minimum: 6 },
+                    format: { with: /\A[a-zA-Z0-9]+\Z/ }
 end
