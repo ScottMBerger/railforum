@@ -2,4 +2,4 @@
 
 This is web application that will be a fully featured web forum with the topic of Ruby on Rails.
 
-Created by Scott berger.
+Created by Scott Berger.
