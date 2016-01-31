@@ -66,12 +66,12 @@ class UserTest < ActiveSupport::TestCase
   end
   
   test "username should be present (nonblank)" do
-    @user.username = @user.username = " " * 6
+    @user.username = @user.username = " " * 2
     assert_not @user.valid?
   end
 
   test "username should have a minimum length" do
-    @user.username = @user.username = "a" * 5
+    @user.username = @user.username = "a" * 1
     assert_not @user.valid?
   end
 
