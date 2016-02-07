@@ -12,7 +12,7 @@
             <small><%= forum.topics.count %> topics</small><br />
             <%=h forum.description %></td>
           <td class="right"></td>
-          <% if Rails.env.development? %>
+          <% if current_user && current_user.admin? %>
           <td><%= link_to "Show", forum %></td>
           <td><%= link_to "Edit", edit_forum_path(forum) %></td>
           <td><%= link_to "Destroy", forum, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -21,6 +21,6 @@
       <% end %>
     </tbody>
 </table>
-<% if Rails.env.development? %>
+<% if current_user && current_user.admin? %>
 <p><%= link_to "New Forum", new_forum_path %></p>
 <% end %>
