@@ -1,5 +1,5 @@
 class TopicsController < ApplicationController
-  before_action :set_topic, only: [:show, :edit, :update, :destroy]
+
 
   # GET /topics
   # GET /topics.json
@@ -10,11 +10,13 @@ class TopicsController < ApplicationController
   # GET /topics/1
   # GET /topics/1.json
   def show
+     @topic = Topic.find(params[:id])
   end
 
   # GET /topics/new
   def new
     @topic = Topic.new
+    
   end
 
   # GET /topics/1/edit
@@ -28,7 +30,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save
-        format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
+        format.html { redirect_to @topic, notice: 'topic was successfully created.' }
         format.json { render :show, status: :created, location: @topic }
       else
         format.html { render :new }
@@ -69,6 +71,15 @@ class TopicsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def topic_params
-      params.require(:topic).permit(:name, :last_poster_id, :last_post_at)
+      params.require(:topic).permit(:name, :content)
+    end
+
+    def post_params
+      params.require(:post).permit(:content, :picture)
+    end
+
+    def correct_user
+      @post = current_user.posts.find_by(id: params[:id])
+      redirect_to root_url if @post.nil?
     end
 end
