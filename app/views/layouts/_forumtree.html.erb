@@ -1,0 +1,26 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th width="70%">Forum</th>
+        <th width="30%">Last Post</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for forum in @forums %>
+        <tr>
+          <td><h4><%= link_to h(forum.name), forum_path(forum.id) %></h4>
+            <small><%= forum.topics.count %> topics</small><br />
+            <%=h forum.description %></td>
+          <td class="right"></td>
+          <% if Rails.env.development? %>
+          <td><%= link_to "Show", forum %></td>
+          <td><%= link_to "Edit", edit_forum_path(forum) %></td>
+          <td><%= link_to "Destroy", forum, :confirm => 'Are you sure?', :method => :delete %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+<% if Rails.env.development? %>
+<p><%= link_to "New Forum", new_forum_path %></p>
+<% end %>

@@ -23,6 +23,10 @@ $gray-medium-light: #eaeaea;
 
 /* universal */
 
+.btn-danger {
+  color: #fff;
+}
+
 body {
   padding-top: 60px;
 }
@@ -86,7 +90,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 3em;
+
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
@@ -192,4 +196,31 @@ input {
 #session_remember_me {
   width: auto;
   margin-left: 0;
+}
+
+/* forum table */
+table {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+thead th {
+  background-color: #006DCC;
+  color: white;
+}
+
+tbody td {
+  background-color: #EEEEEE;
+}
+
+tr td:first-child,
+tr th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+tr td:last-child,
+tr th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
