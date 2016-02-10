@@ -14,8 +14,8 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
-    @user = User.find(params[:id])
+    @topic = Topic.find(params[:topic_id])
+    @post = @topic.posts.create(post_params)
   end
 
   # GET /posts/1/edit
@@ -25,12 +25,14 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(:content => params[:post][:content], :topic_id => params[:post][:topic_id], :user_id => current_user.id)
+    @topic = Topic.find(params[:topic_id])
+    @post = @topic.posts.create(post_params)
+    @post.user_id = current_user.id
+    
     if @post.save
-      flash[:notice] = "Successfully created post."
-      redirect_to "/topics/#{@post.topic_id}"
+      redirect_to topic_path(@topic)
     else
-      render :action => 'new'
+      render 'new'
     end
   end
 
@@ -66,6 +68,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:content, :user_id)
+      params.require(:post).permit(:content)
     end
 end

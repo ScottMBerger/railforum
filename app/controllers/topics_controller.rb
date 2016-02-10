@@ -1,21 +1,18 @@
 class TopicsController < ApplicationController
+  before_action :find_topic,  only: [:show, :edit, :update, :destroy]
 
-
-  # GET /topics
-  # GET /topics.json
+  #Lists all topics
   def index
     @topics = Topic.all
   end
 
-  # GET /topics/1
-  # GET /topics/1.json
+  #Shows all specified topics
   def show
-     @topic = Topic.find(params[:id])
   end
 
-  # GET /topics/new
+  #New topic page
   def new
-    @topic = Topic.new
+    @topic = current_user.topics.build
     
   end
 
@@ -23,10 +20,9 @@ class TopicsController < ApplicationController
   def edit
   end
 
-  # POST /topics
-  # POST /topics.json
+  #Create new topic and then redirects
   def create
-    @topic = Topic.new(topic_params)
+    @topic = current_user.topics.build(topic_params)
 
     respond_to do |format|
       if @topic.save
@@ -78,6 +74,10 @@ class TopicsController < ApplicationController
       params.require(:post).permit(:content, :picture)
     end
 
+    def find_topic
+      @topic = Topic.find(params[:id])
+    end
+    
     def correct_user
       @post = current_user.posts.find_by(id: params[:id])
       redirect_to root_url if @post.nil?

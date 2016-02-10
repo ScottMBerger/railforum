@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :posts
-  resources :topics
+  resources :topics do
+      resources :posts
+  end
   resources :forums
   get 'sessions/new'
 

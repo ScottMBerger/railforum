@@ -1,14 +1,17 @@
 
- 
-<% for post in @topic.posts %>
-<div class="post">
-  <span class="left"><%= post.user.username %><br /><%= link_to "Delete", post, :confirm => 'Are you sute?', :method => :delete%></span>
-  <span class="right"><%= post.content %></span>
-</div>
-<% end %>
- 
 <p>
   <%= link_to "Edit", edit_topic_path(@topic) %> |
   <%= link_to "Destroy Topic", @topic, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", topics_path %>
 </p>
+
+<div>
+  <h3><%= @topic.name %> </h3>
+  <p> <%= @topic.content %> <p>
+</div>
+
+<h3>Responses</h3>
+<%= render @topic.posts %>
+
+<h3>Create a Reply</h3>
+<%= render 'posts/form' %>
