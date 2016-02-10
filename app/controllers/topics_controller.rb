@@ -1,9 +1,12 @@
 class TopicsController < ApplicationController
   before_action :find_topic,  only: [:show, :edit, :update, :destroy]
-
+  before_action :signedin,  except: [:index, :show]
+  before_action :admin_or_correct_topic, only: [:update, :edit]
+  before_action :admin_user, only: [:destroy]
+  
   #Lists all topics
   def index
-    @topics = Topic.all
+    @topic = Topic.all
   end
 
   #Shows all specified topics
@@ -13,7 +16,6 @@ class TopicsController < ApplicationController
   #New topic page
   def new
     @topic = current_user.topics.build
-    
   end
 
   # GET /topics/1/edit
@@ -81,5 +83,14 @@ class TopicsController < ApplicationController
     def correct_user
       @post = current_user.posts.find_by(id: params[:id])
       redirect_to root_url if @post.nil?
+    end
+    
+    def correct_user_topic
+      @topic = current_user.topics.find_by(id: params[:id])
+      @topic.nil? == false
+    end
+    
+    def admin_or_correct_topic
+      redirect_to(root_url) unless current_user.admin? or correct_user_topic
     end
 end

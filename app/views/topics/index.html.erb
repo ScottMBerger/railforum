@@ -13,14 +13,11 @@
   </thead>
 
   <tbody>
-    <% @topics.each do |topic| %>
+    <% @topic.each do |topic| %>
       <tr>
-        <td><%= topic.name %></td>
-        <td><%= topic.last_poster_id %></td>
+        <td><%= link_to topic.name, topic %></td>
+        <td><%= topic.last_poster_id %>dd</td>
         <td><%= topic.last_post_at %></td>
-        <td><%= link_to 'Show', topic %></td>
-        <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
-        <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +25,6 @@
 
 <br>
 
+<% if current_user %>
 <%= link_to 'New Topic', new_topic_path %>
+<% end %>

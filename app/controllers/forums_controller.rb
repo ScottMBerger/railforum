@@ -1,5 +1,7 @@
 class ForumsController < ApplicationController
   before_action :set_forum, only: [:show, :edit, :update, :destroy]
+  before_action :signedin,  except: [:index, :show]
+  before_action :admin_user, only: [:new, :destroy, :update, :edit]
   
   # GET /forums
   # GET /forums.json

@@ -1,12 +1,16 @@
 
-<p>
-  <%= link_to "Edit", edit_topic_path(@topic) %> |
-  <%= link_to "Destroy Topic", @topic, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", topics_path %>
-</p>
 
-<div>
+<% if current_user && (current_user.admin? or @topic.user_id == current_user.id) %>
+  <p>
+    <%= link_to "Edit", edit_topic_path(@topic) %> |
+    <%= link_to "Destroy Topic", @topic, :confirm => 'Are you sure?', :method => :delete %> |
+    <%= link_to "View All", topics_path %>
+  </p>
+<% end %>
+
+<div class = "box">
   <h3><%= @topic.name %> </h3>
+  <p>Created by <%= @topic.user.username %> <%= time_ago_in_words(@topic.created_at) %> ago</p>
   <p> <%= @topic.content %> <p>
 </div>
 

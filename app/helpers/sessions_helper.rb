@@ -59,4 +59,17 @@ module SessionsHelper
   def store_location
     session[:forwarding_url] = request.url if request.get?
   end
+  
+  def signedin
+    redirect_to root_url if !logged_in?
+  end
+
+  # Confirms an admin user.
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
+  
+  def admin_or_correct
+    redirect_to(root_url) unless current_user.admin? or correct_user
+  end
 end

@@ -18,4 +18,6 @@
   <% end %>
 </table>
  
+<% if current_user %>
 <p><%= link_to "New Topic", "/topics/new?forum=#{@forum.id}" %></p>
+<% end %>

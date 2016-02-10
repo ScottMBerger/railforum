@@ -21,6 +21,7 @@
       <% end %>
     </tbody>
 </table>
+
 <% if current_user && current_user.admin? %>
 <p><%= link_to "New Forum", new_forum_path %></p>
 <% end %>
