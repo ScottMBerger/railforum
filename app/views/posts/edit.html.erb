@@ -1,5 +1,5 @@
 <h1>Editing Post</h1>
-<%= form_for([@topic, @post]) do |f| %>
+<%= form_for([@topic, @post], url: forum_topic_post_path(@forum, @topic, @post)) do |f| %>
   <%= f.text_area :content, label: "Edit" %>
   <div class="actions">
     <%= f.submit %>

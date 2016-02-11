@@ -1,4 +1,4 @@
-<%= form_for([@topic, @topic.posts.build]) do |f| %>
+<%= form_for([@topic, @topic.posts.build], url: forum_topic_posts_path(@forum, @topic)) do |f| %>
   <%= f.text_area :content, label: "Reply" %>
   <div class="actions">
     <%= f.submit %>

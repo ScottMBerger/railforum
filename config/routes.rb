@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :topics do
-      resources :posts
+  resources :forums do
+    resources :topics do
+        resources :posts
+    end
   end
-  resources :forums
   get 'sessions/new'
 
   root             'static_pages#home'

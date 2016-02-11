@@ -2,8 +2,8 @@
   <small><%= post.user.username %> replied <%= time_ago_in_words(post.created_at) %> ago</small>
   <p><%= post.content %></p>
   <% if current_user && (current_user.admin? or post.user_id == current_user.id) %>
-    <%= link_to "Edit", edit_topic_post_path(post.topic, post) %>
-    <%= link_to "Delete",  topic_post_path(post.topic, post), method: :delete,
+    <%= link_to "Edit", edit_forum_topic_post_path(@forum, @topic, post) %>
+    <%= link_to "Delete",  forum_topic_post_path(@forum, @topic, post), method: :delete,
         data: { confirm: "Delete?" } %>
   <% end %>
 </div>

@@ -1,7 +1,10 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :find_forum
   before_action :find_topic
-  before_action :find_post, only: [:edit, :update, :destroy]
+  before_action :find_post, only: [:show, :edit, :update, :destroy]
+
+
+  
   before_action :admin_or_correct_post, only: [:update, :edit]
   before_action :signedin,  except: [:index, :show]
   before_action :admin_user, only: [:destroy]
@@ -14,7 +17,7 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = @topic.posts.create(post_params)
+    @post = current_user.posts.build
   end
 
   def edit
@@ -24,17 +27,17 @@ class PostsController < ApplicationController
     @topic = Topic.find(params[:topic_id])
     @post = @topic.posts.create(post_params)
     @post.user_id = current_user.id
-    
+
     if @post.save
-      redirect_to topic_path(@topic)
+      redirect_to forum_topic_path(@forum, @topic)
     else
-      render 'new'
+      render 'edit'
     end
   end
 
   def update
     if @post.update(post_params)
-      redirect_to topic_path(@topic)
+      redirect_to forum_topic_path(@forum, @topic)
     else
       render "edit"
     end
@@ -57,8 +60,12 @@ class PostsController < ApplicationController
       params.require(:post).permit(:content)
     end
     
+    def find_forum
+      @forum = Forum.find(params[:forum_id])
+    end
+    
     def find_topic
-      @topic = Topic.find(params[:topic_id])
+      @topic = @forum.topics.find(params[:topic_id])
     end
     
     def find_post

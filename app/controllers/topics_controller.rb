@@ -1,4 +1,5 @@
 class TopicsController < ApplicationController
+  before_action :find_forum
   before_action :find_topic,  only: [:show, :edit, :update, :destroy]
   before_action :signedin,  except: [:index, :show]
   before_action :admin_or_correct_topic, only: [:update, :edit]
@@ -18,36 +19,30 @@ class TopicsController < ApplicationController
     @topic = current_user.topics.build
   end
 
-  # GET /topics/1/edit
   def edit
   end
 
   #Create new topic and then redirects
   def create
     @topic = current_user.topics.build(topic_params)
-
-    respond_to do |format|
-      if @topic.save
-        format.html { redirect_to @topic, notice: 'topic was successfully created.' }
-        format.json { render :show, status: :created, location: @topic }
-      else
-        format.html { render :new }
-        format.json { render json: @topic.errors, status: :unprocessable_entity }
-      end
+    @topic.forum_id = params[:forum_id]
+    
+    if @topic.save
+      redirect_to forum_topic_path(@forum, @topic)
+    else
+      render 'new'
     end
   end
 
+  
   # PATCH/PUT /topics/1
   # PATCH/PUT /topics/1.json
   def update
-    respond_to do |format|
-      if @topic.update(topic_params)
-        format.html { redirect_to @topic, notice: 'Topic was successfully updated.' }
-        format.json { render :show, status: :ok, location: @topic }
-      else
-        format.html { render :edit }
-        format.json { render json: @topic.errors, status: :unprocessable_entity }
-      end
+    if @topic.update_attributes(topic_params)
+      flash[:success] = "Topic updated"
+      redirect_to forum_topic_path(@forum, @topic)
+    else
+      render 'edit'
     end
   end
 
@@ -56,7 +51,7 @@ class TopicsController < ApplicationController
   def destroy
     @topic.destroy
     respond_to do |format|
-      format.html { redirect_to topics_url, notice: 'Topic was successfully destroyed.' }
+      format.html { redirect_to forum_topics_path, notice: 'Topic was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -76,9 +71,14 @@ class TopicsController < ApplicationController
       params.require(:post).permit(:content, :picture)
     end
 
-    def find_topic
-      @topic = Topic.find(params[:id])
+    def find_forum
+      @forum = Forum.find(params[:forum_id])
     end
+    
+    def find_topic
+      @topic = @forum.topics.find(params[:id])
+    end
+
     
     def correct_user
       @post = current_user.posts.find_by(id: params[:id])
