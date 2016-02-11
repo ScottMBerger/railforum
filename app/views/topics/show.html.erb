@@ -1,15 +1,24 @@
 <p><small><%= link_to "Ruby on Rails", forums_path %> -> <%= link_to @forum.name, forum_path(@forum) %></small></p>
 
-<p>
-  <% if current_user && (current_user.admin? or @topic.user_id == current_user.id) %>
-    <%= link_to "Edit", edit_forum_topic_path(@forum, @topic) %> 
-  <% end %>
-  <% if current_user && current_user.admin? %>
-   | <%= link_to "Destroy Topic", forum_topic_path, :confirm => 'Are you sure?', :method => :delete %> |
-  <% end %>
-</p>
 
-<h3><%= @topic.name %></h3>
+<div class="row name-div" style="height: 48px;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th width="90%"><%= @topic.name %></th>
+        <th width="10%">
+          <% if current_user && (current_user.admin? or @topic.user_id == current_user.id) %>
+            <%= link_to "Edit", edit_forum_topic_path(@forum, @topic) %> 
+          <% end %>
+          <% if current_user && current_user.admin? %>
+           | <%= link_to "Destroy Topic", forum_topic_path, :confirm => 'Are you sure?', :method => :delete %> |
+          <% end %>
+        </th>
+      </tr>
+    </thead>
+  </table>
+</div>
+
 <div class="row box">
   <div class="col-md-2">
     <%= link_user(@topic.user) %><br>
@@ -18,7 +27,7 @@
   </div>
   <div class="col-md-10">
     <small>Created at <%= time_ago_in_words(@topic.created_at) %> ago</small>
-    <p><%= @topic.content %></p>
+    <p><%= @topic.content.bbcode_to_html.html_safe %></p>
   </div>
 </div>
 

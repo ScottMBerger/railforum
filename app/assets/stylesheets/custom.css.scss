@@ -226,9 +226,19 @@ tr th:last-child {
 }
 
 .box {
-    outline: 1px solid black;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  background-color: #f1f1f1;
+  border: 1px solid #bbb;
 }
 
 .admin {
   color: red;
+}
+
+.name {
+  background-color: #E55B5B;
+}
+.name-div {
+   height: 48;
 }
