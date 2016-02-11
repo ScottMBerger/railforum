@@ -2,7 +2,7 @@
     <thead>
       <tr>
         <th width="70%">Forum</th>
-        <th width="30%">Last Post</th>
+        <th width="30%">Latest Topic</th>
       </tr>
     </thead>
     <tbody>
@@ -11,7 +11,9 @@
           <td><h4><%= link_to h(forum.name), forum_path(forum.id) %></h4>
             <small><%= forum.topics.count %> topics</small><br />
             <%=h forum.description %></td>
-          <td class="right"></td>
+          <td class="right"><%= link_to forum.topics.last.name, forum_topic_path(forum.id, forum.topics.last.id) %> by <%= link_user(forum.topics.last.user) %><br>
+            <%= time_ago_in_words(forum.topics.last.updated_at) %> ago
+          </td>
           <% if current_user && current_user.admin? %>
           <td><%= link_to "Show", forum %></td>
           <td><%= link_to "Edit", edit_forum_path(forum) %></td>

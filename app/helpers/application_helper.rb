@@ -10,4 +10,12 @@ module ApplicationHelper
     end
   end
   
+  def link_user(inputid)
+    user = User.find_by(id: inputid)
+    if user.admin?
+      link_to user.username, user_path(inputid), class: "admin"
+    else
+      link_to user.username, user_path(inputid)
+    end
+  end
 end

@@ -27,7 +27,8 @@ class PostsController < ApplicationController
     @topic = Topic.find(params[:topic_id])
     @post = @topic.posts.create(post_params)
     @post.user_id = current_user.id
-
+    @topic.updated_at = @post.updated_at
+    
     if @post.save
       redirect_to forum_topic_path(@forum, @topic)
     else

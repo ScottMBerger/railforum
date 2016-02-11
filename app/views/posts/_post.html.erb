@@ -1,9 +1,21 @@
-<div class = "box">
-  <small><%= post.user.username %> replied <%= time_ago_in_words(post.created_at) %> ago</small>
-  <p><%= post.content %></p>
-  <% if current_user && (current_user.admin? or post.user_id == current_user.id) %>
-    <%= link_to "Edit", edit_forum_topic_post_path(@forum, @topic, post) %>
-    <%= link_to "Delete",  forum_topic_post_path(@forum, @topic, post), method: :delete,
-        data: { confirm: "Delete?" } %>
-  <% end %>
+
+<div class="row box">
+  <div class="col-md-2">
+    <%= link_user(post.user) %><br>
+    <%= gravatar_for post.user %><br><br><br><br>
+    Posts: <%= post.user.posts.count + post.user.topics.count %>
+  </div>
+  <div class="col-md-10">
+    <small>replied <%= time_ago_in_words(post.created_at) %> ago</small>
+    <p><%= post.content %></p>
+    
+    <% if current_user && (current_user.admin? or post.user_id == current_user.id) %>
+      <div class="pull-right">
+        <%= link_to "Edit", edit_forum_topic_post_path(@forum, @topic, post) %>
+        <%= link_to "Delete",  forum_topic_post_path(@forum, @topic, post), method: :delete,
+            data: { confirm: "Delete?" } %>
+      </div>
+    <% end %>
+  </div>
 </div>
+

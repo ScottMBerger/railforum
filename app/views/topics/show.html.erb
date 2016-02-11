@@ -8,14 +8,24 @@
   </p>
 <% end %>
 
-<div class = "box">
-  <h3><%= @topic.name %> </h3>
-  <p>Created by <%= @topic.user.username %> <%= time_ago_in_words(@topic.created_at) %> ago</p>
-  <p> <%= @topic.content %> <p>
+
+<h3><%= @topic.name %></h3>
+<div class="row box">
+  <div class="col-md-2">
+    <%= link_user(@topic.user) %><br>
+    <%= gravatar_for @topic.user %><br><br><br><br>
+    Posts: <%= @topic.user.posts.count + @topic.user.topics.count %>
+  </div>
+  <div class="col-md-10">
+    <small>Created at <%= time_ago_in_words(@topic.created_at) %> ago</small>
+    <p><%= @topic.content %></p>
+  </div>
 </div>
 
 <h3>Responses</h3>
 <%= render @topic.posts %>
 
-<h3>Create a Reply</h3>
-<%= render 'posts/form' %>
+<% if current_user %>
+  <h3>Create a Reply</h3>
+  <%= render 'posts/form' %>
+<% end %>

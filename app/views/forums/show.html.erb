@@ -13,16 +13,18 @@
     <tr>
       <td><%= link_to h(topic.name), forum_topic_path(@forum, topic.id) %>
           <br>
-          <small>By <%= link_to topic.user.username, user_path(topic.user) %></small>
+          <small>By <%= link_user(topic.user) %></small>
       </td>
       <td class="right"><%= topic.posts.count %></td>
-       <td><%= topic.posts.last ? topic.posts.last.created_at : topic.updated_at %>
+       <td><%= topic.posts.last ? time_ago_in_words(topic.posts.last.created_at)+" ago" : time_ago_in_words(topic.updated_at)+" ago" %>
            <br>
-           <small>By <%= link_to topic.posts.last ? topic.posts.last.user.username : topic.user.username, user_path(topic.posts.last ? topic.posts.last.user : topic.user) %></small>
+           <small>By <%= topic.posts.last ? link_user(topic.posts.last.user) : link_user(topic.user) %></small>
        </td>
        
-      <td><%= link_to "Edit", edit_forum_topic_path(@forum, topic.id) %></td>
-      <td><%= link_to "Destroy", forum_topic_path(@forum, topic.id), :confirm => 'Are you sure?', :method => :delete %></td>
+       <% if current_user && current_user.admin? %>
+        <td><%= link_to "Edit", edit_forum_topic_path(@forum, topic.id) %></td>
+        <td><%= link_to "Destroy", forum_topic_path(@forum, topic.id), :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
