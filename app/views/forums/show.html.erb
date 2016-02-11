@@ -1,15 +1,29 @@
 
-<p><small>
+<p>
+<small>
   <%= link_to "Ruby on Rails", forums_path %> -> <%= link_to @forum.name, forum_path(@forum) %>
-</small></p>
-<h2><%= @forum.name %></h2>
-<table>
+</small>
+</p>
+
+<h1 class ="pull-left"><%= @forum.name %></h1>
+
+<br><br><br>
+
+  <div class = "pull-right pull-down">
+    <% if current_user %>
+      <%= link_to "New Topic", new_forum_topic_path(@forum) %>
+    <% end %>
+  </div>
+
+<table class="table">
+  <thead>
   <tr>
     <th width="60%">Topic Title</th>
     <th width="10%">Replies</th>
     <th width="30%">Last Post</th>
   </tr>
-  <% for topic in @forum.topics %>
+  </thead>
+  <% @forum.topics.order("updated_at desc").each do |topic|%>
     <tr>
       <td><%= link_to h(topic.name), forum_topic_path(@forum, topic.id) %>
           <br>
@@ -29,6 +43,3 @@
   <% end %>
 </table>
  
-<% if current_user %>
-<p><%= link_to "New Topic", new_forum_topic_path(@forum) %></p>
-<% end %>

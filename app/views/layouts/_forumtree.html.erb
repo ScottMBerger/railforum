@@ -1,7 +1,9 @@
+
 <table class="table">
     <thead>
       <tr>
-        <th width="70%">Forum</th>
+        <th width="60%">Forum</th>
+        <th width="10%">Topics</th>
         <th width="30%">Latest Topic</th>
       </tr>
     </thead>
@@ -9,9 +11,10 @@
       <% for forum in @forums %>
         <tr>
           <td><h4><%= link_to h(forum.name), forum_path(forum.id) %></h4>
-            <small><%= forum.topics.count %> topics</small><br />
-            <%=h forum.description %></td>
-          <td class="right"><%= link_to forum.topics.last.name, forum_topic_path(forum.id, forum.topics.last.id) %> by <%= link_user(forum.topics.last.user) %><br>
+            <small><%=h forum.description %></small>
+            </td>
+          <td class="right"><%= forum.topics.count %></td>
+          <td><%= link_to forum.topics.last.name, forum_topic_path(forum.id, forum.topics.last.id) %> by <%= link_user(forum.topics.last.user) %><br>
             <%= time_ago_in_words(forum.topics.last.updated_at) %> ago
           </td>
           <% if current_user && current_user.admin? %>
@@ -23,6 +26,7 @@
       <% end %>
     </tbody>
 </table>
+
 
 <% if current_user && current_user.admin? %>
 <p><%= link_to "New Forum", new_forum_path %></p>

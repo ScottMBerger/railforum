@@ -1,13 +1,13 @@
-<p><small>
-  <%= link_to "Ruby on Rails", forums_path %> -> <%= link_to @forum.name, forum_path(@forum) %>
-</small></p>
-<% if current_user && (current_user.admin? or @topic.user_id == current_user.id) %>
-  <p>
-    <%= link_to "Edit", edit_forum_topic_path(@forum, @topic) %> |
-    <%= link_to "Destroy Topic", forum_topic_path, :confirm => 'Are you sure?', :method => :delete %> |
-  </p>
-<% end %>
+<p><small><%= link_to "Ruby on Rails", forums_path %> -> <%= link_to @forum.name, forum_path(@forum) %></small></p>
 
+<p>
+  <% if current_user && (current_user.admin? or @topic.user_id == current_user.id) %>
+    <%= link_to "Edit", edit_forum_topic_path(@forum, @topic) %> 
+  <% end %>
+  <% if current_user && current_user.admin? %>
+   | <%= link_to "Destroy Topic", forum_topic_path, :confirm => 'Are you sure?', :method => :delete %> |
+  <% end %>
+</p>
 
 <h3><%= @topic.name %></h3>
 <div class="row box">
@@ -22,8 +22,10 @@
   </div>
 </div>
 
-<h3>Responses</h3>
-<%= render @topic.posts %>
+<% if @topic.posts.count > 0 %>
+  <h4>Responses</h4>
+  <%= render @topic.posts %>
+<% end %>
 
 <% if current_user %>
   <h3>Create a Reply</h3>
