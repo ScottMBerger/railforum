@@ -1,10 +1,10 @@
-
-
+<p><small>
+  <%= link_to "Ruby on Rails", forums_path %> -> <%= link_to @forum.name, forum_path(@forum) %>
+</small></p>
 <% if current_user && (current_user.admin? or @topic.user_id == current_user.id) %>
   <p>
     <%= link_to "Edit", edit_forum_topic_path(@forum, @topic) %> |
     <%= link_to "Destroy Topic", forum_topic_path, :confirm => 'Are you sure?', :method => :delete %> |
-    <%= link_to "View All", forum_topics_path %>
   </p>
 <% end %>
 

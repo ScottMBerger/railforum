@@ -1,5 +1,8 @@
 
- 
+<p><small>
+  <%= link_to "Ruby on Rails", forums_path %> -> <%= link_to @forum.name, forum_path(@forum) %>
+</small></p>
+<h2><%= @forum.name %></h2>
 <table>
   <tr>
     <th width="60%">Topic Title</th>
@@ -9,7 +12,15 @@
   <% for topic in @forum.topics %>
     <tr>
       <td><%= link_to h(topic.name), forum_topic_path(@forum, topic.id) %>
-      <td class="right"></td>
+          <br>
+          <small>By <%= link_to topic.user.username, user_path(topic.user) %></small>
+      </td>
+      <td class="right"><%= topic.posts.count %></td>
+       <td><%= topic.posts.last ? topic.posts.last.created_at : topic.updated_at %>
+           <br>
+           <small>By <%= link_to topic.posts.last ? topic.posts.last.user.username : topic.user.username, user_path(topic.posts.last ? topic.posts.last.user : topic.user) %></small>
+       </td>
+       
       <td><%= link_to "Edit", edit_forum_topic_path(@forum, topic.id) %></td>
       <td><%= link_to "Destroy", forum_topic_path(@forum, topic.id), :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
