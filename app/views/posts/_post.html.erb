@@ -7,7 +7,7 @@
   </div>
   <div class="col-md-10">
     <small>replied <%= time_ago_in_words(post.created_at) %> ago</small>
-    <p><%= post.content %></p>
+    <p><%= post.content.bbcode_to_html.html_safe  %></p>
     
     <% if current_user && (current_user.admin? or post.user_id == current_user.id) %>
       <div class="pull-right">
