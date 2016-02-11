@@ -10,10 +10,10 @@
     <tbody>
       <% for forum in @forums %>
         <tr>
-          <td><h4><%= link_to h(forum.name), forum_path(forum.id) %></h4>
+          <td><h4><%= link_to forum.name, forum_path(forum.id) %></h4>
             <small><%=h forum.description %></small>
           </td>
-          <% if !forum.topics.nil? %>
+          <% if forum.topics.count > 0 %>
             <td class="right"><%= forum.topics.count %></td>
             <td><%= link_to forum.topics.last.name, forum_topic_path(forum.id, forum.topics.last.id) %> by <%= link_user(forum.topics.last.user) %><br>
               <%= time_ago_in_words(forum.topics.last.updated_at) %> ago
