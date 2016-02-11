@@ -25,7 +25,8 @@ class TopicsController < ApplicationController
   #Create new topic and then redirects
   def create
     @topic = current_user.topics.build(topic_params)
-    @topic.forum_id = params[:forum_id]
+    @topic.user_id = current_user.id
+    @topic.forum_id = @forum.id
     
     if @topic.save
       redirect_to forum_topic_path(@forum, @topic)
