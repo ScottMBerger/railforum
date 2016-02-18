@@ -12,7 +12,7 @@ module ApplicationHelper
   
   def link_user(inputid)
     user = User.find_by(id: inputid)
-    if user.admin?
+    if user.try(:admin?)
       link_to user.username, user_path(inputid), class: "admin"
     else
       link_to user.username, user_path(inputid)

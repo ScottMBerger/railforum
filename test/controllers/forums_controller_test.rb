@@ -2,9 +2,17 @@ require 'test_helper'
 
 class ForumsControllerTest < ActionController::TestCase
   setup do
+    @user = users(:Scott)
     @forum = forums(:one)
+    @topic = topics(:one)
   end
 
+  test "count topics" do
+    assert_difference('Forum.topics.count', -1) do
+      
+    end
+  end
+  
   test "should get index" do
     get :index
     assert_response :success
@@ -36,7 +44,7 @@ class ForumsControllerTest < ActionController::TestCase
 
   test "should update forum" do
     patch :update, id: @forum, forum: { description: @forum.description, name: @forum.name }
-    assert_redirected_to forum_path(assigns(:forum))
+    assert_redirected_to forum_path
   end
 
   test "should destroy forum" do
