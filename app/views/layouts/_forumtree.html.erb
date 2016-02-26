@@ -19,9 +19,9 @@
               <%= time_ago_in_words(forum.topics.last.updated_at) %> ago
             </td>
             <% if current_user && current_user.admin? %>
-            <td><%= link_to "Show", forum %></td>
-            <td><%= link_to "Edit", edit_forum_path(forum) %></td>
-            <td><%= link_to "Destroy", forum, :confirm => 'Are you sure?', :method => :delete %></td>
+              <td><%= link_to "Show", forum %></td>
+              <td><%= link_to "Edit", edit_forum_path(forum) %></td>
+              <td><%= link_to "Destroy", forum, :confirm => 'Are you sure?', :method => :delete %></td>
             <% end %>
           <% end %>
         </tr>
